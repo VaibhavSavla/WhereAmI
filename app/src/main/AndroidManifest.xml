@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.example.vaibhav.whereami"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.vaibhav.whereami">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -45,8 +45,8 @@
         <activity
             android:name=".searchplaces.PlaceAutoCompleteActivity"
             android:label="@string/title_activity_place_auto_complete"
-            android:screenOrientation="portrait"
             android:parentActivityName=".mycity.MyLocationActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible"
             tools:ignore="UnusedAttribute">
@@ -57,14 +57,19 @@
         <activity
             android:name=".placedetail.NearbyPlaceActivity"
             android:label="@string/title_activity_nearby_place"
-            android:screenOrientation="portrait"
             android:parentActivityName=".searchplaces.PlaceAutoCompleteActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.vaibhav.whereami.searchplaces.PlaceAutoCompleteActivity"/>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"
+            tools:replace="android:value" />
     </application>
 
 </manifest>

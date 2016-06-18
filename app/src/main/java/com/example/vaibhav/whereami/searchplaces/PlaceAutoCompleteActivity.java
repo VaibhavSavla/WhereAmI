@@ -54,7 +54,6 @@ public class PlaceAutoCompleteActivity extends AppCompatActivity implements Goog
                 .enableAutoManage(this, 0 /* clientId */, this)
                 .addApi(Places.GEO_DATA_API)
                 .build();
-        mGoogleApiClient.connect();
         // Retrieve the AutoCompleteTextView that will display Place suggestions.
         mAutocompleteView = (AutoCompleteTextView)
                 findViewById(R.id.autoCompleteTextView);
@@ -108,8 +107,13 @@ public class PlaceAutoCompleteActivity extends AppCompatActivity implements Goog
         mErrorTextView.setText(null);
     }
 
-    @Override protected void onDestroy() {
-        super.onDestroy();
+    @Override protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override protected void onStop() {
+        super.onStop();
         mGoogleApiClient.disconnect();
         mAdapter.unregisterDataSetObserver(observer);
     }
