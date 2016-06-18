@@ -45,6 +45,7 @@
         <activity
             android:name=".searchplaces.PlaceAutoCompleteActivity"
             android:label="@string/title_activity_place_auto_complete"
+            android:screenOrientation="portrait"
             android:parentActivityName=".mycity.MyLocationActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible"
@@ -56,6 +57,7 @@
         <activity
             android:name=".placedetail.NearbyPlaceActivity"
             android:label="@string/title_activity_nearby_place"
+            android:screenOrientation="portrait"
             android:parentActivityName=".searchplaces.PlaceAutoCompleteActivity"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="UnusedAttribute">
