@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Where Am I</string>
+    <string name="title_activity_my_location">Where Am I</string>
+    <string name="title_activity_place_auto_complete">PlaceAutoCompleteActivity</string>
+    <string name="title_activity_nearby_place">Place Map</string>
+    <string name="location_error_message">Location not available</string>
+
+    <string name="error_no_place_found">No place found.</string>
+    <string name="search_hint">Search for nearby places.</string>
+    <string name="action_share">Share</string>
+    <string name="place_icon_description">place icon</string>
+    <string name="finding_location">Finding Location</string>
+</resources>
