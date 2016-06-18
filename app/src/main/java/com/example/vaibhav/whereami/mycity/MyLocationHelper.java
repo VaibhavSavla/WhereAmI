@@ -79,6 +79,11 @@ class MyLocationHelper {
             @Override public void onLocationChanged(Location location) {
 
                 try {
+
+                    // first retrieve user's exact coordinates.
+                    // then extract the city name using geocoder
+                    // then find the coordinates of the city
+
                     LatLng exactLatLng = new LatLng(
                             location.getLatitude(),
                             location.getLongitude()
@@ -95,7 +100,8 @@ class MyLocationHelper {
                             cityAddress.getLatitude(),
                             cityAddress.getLongitude()
                     );
-                    mContext.updateUIOnLocationReceived(cityName + ", " + countryName);
+
+                    mContext.updateUIOnLocationReceived(cityName, countryName);
                 } catch (IOException e) {
                     Log.e(TAG, "Unable to get location", e);
                 }
@@ -126,6 +132,10 @@ class MyLocationHelper {
     }
 
     void prepareGoogleMap(GoogleMap map) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(cityLatLng, 12));
+
+        // for city level zoom
+        float zoomLevel = 12.0f;
+
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(cityLatLng, zoomLevel));
     }
 }

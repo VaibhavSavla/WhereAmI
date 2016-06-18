@@ -7,12 +7,12 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.example.vaibhav.whereami.R;
 import com.example.vaibhav.whereami.searchplaces.PlaceAutoCompleteActivity;
 import com.example.vaibhav.whereami.util.Constants;
+import com.example.vaibhav.whereami.util.Utils;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -62,7 +62,7 @@ public class MyLocationActivity extends ActivityManagePermission implements OnMa
 
     void updateUIOnLocationFailed() {
         mCityTextView.setText(R.string.location_error_message);
-        mSearchPlacesFab.setVisibility(View.VISIBLE);
+        mSearchPlacesFab.show();
     }
 
     @Override
@@ -83,7 +83,7 @@ public class MyLocationActivity extends ActivityManagePermission implements OnMa
         switch (id) {
             case R.id.action_share:
                 Intent shareIntent = locationHelper.getShareLocationIntent();
-                startActivity(Intent.createChooser(shareIntent, "Share Location via: "));
+                startActivity(Intent.createChooser(shareIntent, getString(R.string.share_location_prompt)));
                 return true;
         }
 
@@ -101,8 +101,8 @@ public class MyLocationActivity extends ActivityManagePermission implements OnMa
         startActivity(intent);
     }
 
-    void updateUIOnLocationReceived(String cityName) {
-        mCityTextView.setText(cityName);
+    void updateUIOnLocationReceived(String cityName, String countryName) {
+        mCityTextView.setText(Utils.fullAddress(cityName, countryName));
         actionShare.setVisible(true);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.

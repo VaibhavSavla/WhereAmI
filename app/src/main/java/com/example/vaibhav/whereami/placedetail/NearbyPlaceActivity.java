@@ -1,10 +1,6 @@
 package com.example.vaibhav.whereami.placedetail;
 
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -18,16 +14,11 @@ import android.widget.TextView;
 import com.example.vaibhav.whereami.R;
 import com.example.vaibhav.whereami.util.Constants;
 import com.example.vaibhav.whereami.util.Utils;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,13 +32,16 @@ public class NearbyPlaceActivity extends AppCompatActivity implements OnMapReady
     @BindView(R.id.list_item_forecast_textview) TextView mSecondaryTextView;
     @BindView(R.id.list_item_icon) ImageView mPlaceIcon;
     @BindView(R.id.fab_search_places) FloatingActionButton mSearchPlaces;
-    private LatLng latLng;
+
+    private NearbyPlaceHelper mNearbyPlaceHelper;
+
+    private String primaryText;
+    private String secondaryText;
+    private ArrayList<Integer> playTypes;
 
     @OnClick(R.id.fab_search_places)
     void onClick() {
-        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + latLng.latitude + "," + latLng.longitude + "\n");
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage(Constants.PACKAGE_MAPS);
+        Intent mapIntent = mNearbyPlaceHelper.getMapNavigationIntent();
         if (mapIntent.resolveActivity(getPackageManager()) != null) {
             startActivity(mapIntent);
         }
@@ -69,13 +63,8 @@ public class NearbyPlaceActivity extends AppCompatActivity implements OnMapReady
 
         switch (id) {
             case R.id.action_share:
-                Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, mPrimaryTextView.getText() + ", " + mSecondaryTextView.getText());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-                }
-                startActivity(Intent.createChooser(shareIntent, "Share Location via: "));
+                Intent shareIntent = mNearbyPlaceHelper.getShareIntent(String.format("%s, %s", primaryText, secondaryText));
+                startActivity(Intent.createChooser(shareIntent, getString(R.string.share_location_prompt)));
                 return true;
         }
 
@@ -94,36 +83,32 @@ public class NearbyPlaceActivity extends AppCompatActivity implements OnMapReady
         }
 
         ButterKnife.bind(this);
+
+        Intent intent = getIntent();
+        primaryText = intent.getStringExtra(Constants.EXTRA_PRIMARY_TEXT);
+        secondaryText = intent.getStringExtra(Constants.EXTRA_SECONDARY_TEXT);
+        playTypes = intent.getIntegerArrayListExtra(Constants.EXTRA_PLACE_TYPES);
+
+        mNearbyPlaceHelper = new NearbyPlaceHelper(this);
+
+        mNearbyPlaceHelper.getLatLngFromLocation(Utils.fullAddress(primaryText, secondaryText));
         updateUI();
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        try {
-            Address address = geocoder.getFromLocationName(mPrimaryTextView.getText() + ", " + mSecondaryTextView.getText(), 1).get(0);
-            latLng = new LatLng(
-                    address.getLatitude(),
-                    address.getLongitude()
-            );
-            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.map);
-            mapFragment.getMapAsync(NearbyPlaceActivity.this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     private void updateUI() {
-        Intent intent = getIntent();
-        String primaryText = intent.getStringExtra(Constants.EXTRA_PRIMARY_TEXT);
-        String secondaryText = intent.getStringExtra(Constants.EXTRA_SECONDARY_TEXT);
-        ArrayList<Integer> playTypes = intent.getIntegerArrayListExtra(Constants.EXTRA_PLACE_TYPES);
         mPrimaryTextView.setText(primaryText);
         mSecondaryTextView.setText(secondaryText);
         mPlaceIcon.setImageResource(Utils.getDrawableFromPlaceId(playTypes));
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(NearbyPlaceActivity.this);
     }
 
     @Override public void onMapReady(GoogleMap googleMap) {
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
-        googleMap.addMarker(new MarkerOptions().position(latLng));
+        mNearbyPlaceHelper.prepareGoogleMap(googleMap);
         mSearchPlaces.show();
     }
 }

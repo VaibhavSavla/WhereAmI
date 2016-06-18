@@ -10,4 +10,6 @@
     <string name="action_share">Share</string>
     <string name="place_icon_description">place icon</string>
     <string name="finding_location">Finding Location</string>
+
+    <string name="share_location_prompt">Share Location via:</string>
 </resources>

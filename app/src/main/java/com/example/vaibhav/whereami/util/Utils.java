@@ -25,4 +25,8 @@ public class Utils {
         if (placeTypes.contains(Place.TYPE_ATM)) return R.drawable.ic_local_atm_black_24dp;
         return R.drawable.ic_place_black_24dp;
     }
+
+    public static String fullAddress(String primaryText, String secondaryText) {
+        return String.format("%s, %s", primaryText, secondaryText);
+    }
 }
