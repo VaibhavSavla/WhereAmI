@@ -50,7 +50,7 @@ public class NearbyPlaceActivity extends AppCompatActivity implements OnMapReady
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_my_location, menu);
+        getMenuInflater().inflate(R.menu.menu_nearby_place, menu);
         return true;
     }
 
