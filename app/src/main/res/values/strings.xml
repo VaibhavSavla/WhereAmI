@@ -12,4 +12,5 @@
     <string name="finding_location">Finding Location</string>
 
     <string name="share_location_prompt">Share Location via:</string>
+    <string name="clear_autocomplete">Clear</string>
 </resources>

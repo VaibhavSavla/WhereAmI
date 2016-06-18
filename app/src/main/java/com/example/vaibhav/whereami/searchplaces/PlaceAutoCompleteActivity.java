@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PlaceAutoCompleteActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -35,6 +36,8 @@ public class PlaceAutoCompleteActivity extends AppCompatActivity implements Goog
     @BindView(R.id.dropdown_anchor) TextView mErrorTextView;
 
     private GoogleApiClient mGoogleApiClient;
+
+    private AutoCompleteTextView mAutocompleteView;
 
     private PlaceAutoCompleteAdapter mAdapter;
 
@@ -53,7 +56,7 @@ public class PlaceAutoCompleteActivity extends AppCompatActivity implements Goog
                 .build();
         mGoogleApiClient.connect();
         // Retrieve the AutoCompleteTextView that will display Place suggestions.
-        AutoCompleteTextView mAutocompleteView = (AutoCompleteTextView)
+        mAutocompleteView = (AutoCompleteTextView)
                 findViewById(R.id.autoCompleteTextView);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -85,16 +88,24 @@ public class PlaceAutoCompleteActivity extends AppCompatActivity implements Goog
         observer = new DataSetObserver() {
             @Override public void onChanged() {
                 super.onChanged();
-                mErrorTextView.setText("");
+                mErrorTextView.setText(null);
             }
 
             @Override public void onInvalidated() {
                 super.onInvalidated();
-                mErrorTextView.setText(R.string.error_no_place_found);
+                if (!mAutocompleteView.getText().toString().equals("")) {
+                    mErrorTextView.setText(R.string.error_no_place_found);
+                }
             }
         };
         mAdapter.registerDataSetObserver(observer);
 
+    }
+
+    @OnClick(R.id.place_autocomplete_clear_button)
+    void onClick() {
+        mAutocompleteView.setText(null);
+        mErrorTextView.setText(null);
     }
 
     @Override protected void onDestroy() {
