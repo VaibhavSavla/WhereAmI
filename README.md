@@ -4,6 +4,12 @@
 
 Debug APK - https://github.com/VaibhavSavla/WhereAmI/blob/master/assets/app-debug.apk
 
+# Dependencies
+
+Android Sdk Version 24
+Google Maps Android API (Display Maps)
+Google Places API for Android (autocomplete places)
+
 # Screenshots
 
 ![Screenshot 1](https://github.com/VaibhavSavla/WhereAmI/blob/master/assets/Screenshot_20160618-082048.png "Screen 1")
