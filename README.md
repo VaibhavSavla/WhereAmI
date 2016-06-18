@@ -1,10 +1,14 @@
 # WhereAmI
 
+# APK
+
+Debug APK - https://github.com/VaibhavSavla/WhereAmI/blob/master/assets/app-debug.apk
+
 # Screenshots
 
-![Alt text](https://github.com/VaibhavSavla/WhereAmI/blob/master/assets/Screenshot_20160618-082048.png "Screen 1")
-![Alt text](https://github.com/VaibhavSavla/WhereAmI/blob/master/assets/Screenshot_20160618-082106.png "Screen 2")
-![Alt text](https://github.com/VaibhavSavla/WhereAmI/blob/master/assets/Screenshot_20160618-082118.png "Screen 3")
+![Screenshot 1](https://github.com/VaibhavSavla/WhereAmI/blob/master/assets/Screenshot_20160618-082048.png "Screen 1")
+![Screenshot 2](https://github.com/VaibhavSavla/WhereAmI/blob/master/assets/Screenshot_20160618-082106.png "Screen 2")
+![Screenshot 3](https://github.com/VaibhavSavla/WhereAmI/blob/master/assets/Screenshot_20160618-082118.png "Screen 3")
 
 # Screen 1
 
