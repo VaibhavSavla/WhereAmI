@@ -1,4 +1,4 @@
-# WhereAmI
+# WhereAmI&nbsp;&nbsp;&nbsp;&nbsp;<img src="assets/icon.png" height="100" alt="Screen 1"/>
 
 # APK
 
